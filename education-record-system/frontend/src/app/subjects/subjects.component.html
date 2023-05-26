@@ -1,0 +1,108 @@
+<div class="container">
+    <h2>Subjects</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Subject List</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li *ngFor="let subject of subjects" class="list-group-item" (click)="onSelect(subject)">
+                {{ subject.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Selected Subject</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedSubject">
+              <h6 class="card-subtitle mb-2">{{ selectedSubject.name }}</h6>
+              <p class="card-text">ID: {{ selectedSubject.id }}</p>
+              <button class="btn btn-danger mt-3" (click)="deleteSubject(selectedSubject.id)">Delete Subject</button>
+            </div>
+            <div *ngIf="!selectedSubject">
+              <p>Select a subject from the list to view details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Create Subject</h5>
+          </div>
+          <div class="card-body">
+            <form (submit)="createSubject()">
+              <div class="form-group">
+                <label for="subjectName">Name</label>
+                <input type="text" class="form-control" id="subjectName" [(ngModel)]="newSubject.name" name="name" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Update Subject</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedSubject">
+              <form (submit)="updateSubject(selectedSubject.id)">
+                <div class="form-group">
+                  <label for="subjectName">Name</label>
+                  <input type="text" class="form-control" id="subjectName" [(ngModel)]="selectedSubject.name" name="name" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+            </div>
+            <div *ngIf="!selectedSubject">
+              <p>No subject selected.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="card-title">Add Teacher to Subject</h5>
+        </div>
+        <div class="card-body">
+          <form *ngIf="selectedSubject" (submit)="addTeacherToSubject(selectedSubject.id, +teacherId.value)">
+            <div class="form-group">
+              <label for="teacherId">Teacher ID</label>
+              <input type="number" class="form-control" id="teacherId" #teacherId required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Teacher</button>
+          </form>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="card-title">Remove Teacher from Subject</h5>
+        </div>
+        <div class="card-body">
+          <form *ngIf="selectedSubject" (submit)="removeTeacherFromSubject(selectedSubject.id, +teacherId.value)">
+            <div class="form-group">
+              <label for="teacherId">Teacher ID</label>
+              <input type="number" class="form-control" id="teacherId" #teacherId required>
+            </div>
+            <button type="submit" class="btn btn-primary">Remove Teacher</button>
+          </form>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  

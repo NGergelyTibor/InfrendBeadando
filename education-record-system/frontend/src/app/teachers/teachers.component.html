@@ -1,0 +1,127 @@
+<div class="container">
+    <h2>Teachers</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Teacher List</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li *ngFor="let teacher of teachers" class="list-group-item" (click)="onSelect(teacher)">
+                {{ teacher.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Selected Teacher</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedTeacher">
+              <h6 class="card-subtitle mb-2">{{ selectedTeacher.name }}</h6>
+              <p class="card-text">ID: {{ selectedTeacher.id }}</p>
+              <p class="card-text">Department: {{ selectedTeacher.department }}</p>
+              <h6 class="card-subtitle mb-2">Subjects:</h6>
+              <ul class="list-group">
+                <li *ngFor="let subject of selectedTeacher.subjects" class="list-group-item">
+                  {{ subject.name }}
+                </li>
+              </ul>
+              <button class="btn btn-danger mt-3" (click)="deleteTeacher(selectedTeacher.id)">Delete Teacher</button>
+            </div>
+            <div *ngIf="!selectedTeacher">
+              <p>Select a teacher from the list to view details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Create Teacher</h5>
+          </div>
+          <div class="card-body">
+            <form (submit)="createTeacher()">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" [(ngModel)]="newTeacher.name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="department">Department</label>
+                <input type="text" class="form-control" id="department" [(ngModel)]="newTeacher.department" name="department" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Update Teacher</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedTeacher">
+              <form (submit)="updateTeacher(selectedTeacher.id)">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name" [(ngModel)]="selectedTeacher.name" name="name"  required>
+                </div>
+                <div class="form-group">
+                  <label for="department">Department</label>
+                  <input type="text" class="form-control" id="department" [(ngModel)]="selectedTeacher.department" name="department" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+            </div>
+            <div *ngIf="!selectedTeacher">
+              <p>No teacher selected.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="card-title">Add Subject to Teacher</h5>
+        </div>
+        <div class="card-body">
+          <form *ngIf="selectedTeacher" (submit)="addSubjectToTeacher(getTeacherId(selectedTeacher), +subjectId.value)">
+            <div class="form-group">
+              <label for="subjectId">Subject</label>
+              <select class="form-control" id="subjectId" #subjectId required>
+                <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Subject</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="card-title">Remove Subject from Teacher</h5>
+        </div>
+        <div class="card-body">
+          <form *ngIf="selectedTeacher" (submit)="removeSubjectFromTeacher(getTeacherId(selectedTeacher), +subjectId.value)">
+            <div class="form-group">
+              <label for="removeSubjectId">Subject ID</label>
+              <select class="form-control" id="removeSubjectId" #subjectId required>
+                <option *ngFor="let subject of selectedTeacher.subjects" [value]="subject.id">{{ subject.name }}</option>
+              </select>
+            </div>            
+            <button type="submit" class="btn btn-danger">Remove Subject</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

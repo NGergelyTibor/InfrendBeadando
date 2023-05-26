@@ -1,0 +1,68 @@
+<div class="container mt-3">
+  <h2>Grade Management</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Grades</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let grade of grades">
+          Grade: {{ grade.grade }}, ID: {{ grade.id }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Assign New Grade</h3>
+      <form (submit)="createGrade()">
+        <div class="form-group">
+          <label for="grade">Grade:</label>
+          <input type="number" class="form-control" id="grade" [(ngModel)]="newGrade.grade" name="grade" required>
+        </div>
+        <div class="form-group">
+          <label for="studentId">Student:</label>
+          <select class="form-control" id="studentId" [(ngModel)]="newGrade.student.id" name="studentId" required>
+            <option *ngFor="let student of students" [value]="student.id">{{ student.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="courseId">Course:</label>
+          <select class="form-control" id="courseId" [(ngModel)]="newGrade.course.id" name="courseId" required>
+            <option *ngFor="let course of courses" [value]="course.id">{{ course.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="subjectId">Subject:</label>
+          <select class="form-control" id="subjectId" [(ngModel)]="newGrade.subject.id" name="subjectId" required>
+            <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Assign Grade</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Average Grade by Course</h3>
+      <div>
+        <label for="courseIdInput">Course:</label>
+        <select class="form-control" id="courseIdInput" [(ngModel)]="courseIdInput" name="courseIdInput">
+          <option *ngFor="let course of courses" [value]="course.id">{{ course.name }}</option>
+        </select>
+        <button class="btn btn-primary mt-2" (click)="courseIdInput !== null && getAverageGradeByCourse(courseIdInput)">Get Average Grade</button>
+        <div *ngIf="averageGradeByCourse !== null">Average Grade: {{ +averageGradeByCourse }}</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h3>Average Grade by Student</h3>
+      <div>
+        <label for="studentIdInput">Student:</label>
+        <select class="form-control" id="studentIdInput" [(ngModel)]="studentIdInput" name="studentIdInput">
+          <option *ngFor="let student of students" [value]="student.id">{{ student.name }}</option>
+        </select>
+        <button class="btn btn-primary mt-2" (click)="studentIdInput !== null && getAverageGradeByStudent(studentIdInput)">Get Average Grade</button>
+        <div *ngIf="averageGradeByStudent !== null">Average Grade: {{ +averageGradeByStudent }}</div>
+      </div>
+    </div>
+  </div>
+  
+</div>

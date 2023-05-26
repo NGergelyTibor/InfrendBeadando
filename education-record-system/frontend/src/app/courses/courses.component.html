@@ -1,0 +1,118 @@
+<div class="container">
+    <h2>Courses</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Course List</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li *ngFor="let course of courses" class="list-group-item" (click)="onSelect(course)">
+                {{ course.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Selected Course</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedCourse">
+              <h6 class="card-subtitle mb-2">{{ selectedCourse.name }}</h6>
+              <p class="card-text">ID: {{ selectedCourse.id }}</p>
+              <h6 class="card-subtitle mb-2">Students:</h6>
+              <ul class="list-group">
+                <li *ngFor="let student of selectedCourse.students" class="list-group-item">
+                  {{ student.name }}
+                </li>
+              </ul>
+              <button class="btn btn-danger mt-3" (click)="deleteCourse(selectedCourse.id)">Delete Course</button>
+            </div>
+            <div *ngIf="!selectedCourse">
+              <p>Select a course from the list to view details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Create Course</h5>
+          </div>
+          <div class="card-body">
+            <form (submit)="createCourse()">
+              <div class="form-group">
+                <label for="courseName">Name</label>
+                <input type="text" class="form-control" id="courseName" [(ngModel)]="newCourse.name" name="name" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">Update Course</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedCourse">
+              <form (submit)="updateCourse(selectedCourse.id)">
+                <div class="form-group">
+                  <label for="courseName">Name</label>
+                  <input type="text" class="form-control" id="courseName" [(ngModel)]="selectedCourse.name" name="name" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+            </div>
+            <div *ngIf="!selectedCourse">
+              <p>No course selected.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="card-title">Add Student to Course</h5>
+        </div>
+        <div class="card-body">
+          <form *ngIf="selectedCourse" (submit)="addStudentToCourse(selectedCourse.id, +studentId.value)">
+            <div class="form-group">
+              <label for="studentId">Student</label>
+              <select class="form-control" id="studentId" #studentId required>
+                <option *ngFor="let student of students" [value]="student.id">{{ student.name }}</option>
+              </select>
+            </div>            
+            <button type="submit" class="btn btn-primary">Add Student</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="card-title">Remove Student from Course</h5>
+        </div>
+        <div class="card-body">
+          <form *ngIf="selectedCourse" (submit)="removeStudentFromCourse(selectedCourse.id, +studentId.value)">
+            <div class="form-group">
+              <label for="studentId">Student</label>
+              <select class="form-control" id="studentId" #studentId required>
+                <option *ngFor="let student of selectedCourse.students" [value]="student.id">{{ student.name }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Remove Student</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
